@@ -3,31 +3,24 @@
 /*******************************************************************/
 int random(unsigned char* str, size_t n, int verbose){
 
-
   map<char,char> A;
+  std::vector<char> V;                                                                                                                                
 
   for(int i=0; i<n-1;i++){
     A[str[i]] = str[i];
+    V.push_back(str[i]);
   }
 
-  vector<pair<char,bool>> V;
-  for(auto it=A.begin(); it!=A.end(); it++){
-    V.push_back({it->first, false});
-  }
-
-  int sigma = V.size();
-  
   std::random_device rd;
-  for(auto it=A.begin(); it!=A.end(); it++){
-
-    int p=rd()%sigma;
-    while(V[p].second){
-      p = rd()%sigma;
-    }
-
-    V[p].second=true;
-    A[it->first] = V[p].first;
-
+  std::mt19937 randEng(rd());
+  std::shuffle(V.begin(), V.end(), randEng);
+  
+  vector<char>::iterator it = V.begin();
+  for(auto& i: A)   {
+      char ts = i.second;
+      i.second = A[*it];
+      A[*it] = ts;
+      it++;
   }
 
   if(verbose){
@@ -38,7 +31,7 @@ int random(unsigned char* str, size_t n, int verbose){
 
   for(int i=0; i<n-1;i++){
     str[i] = A[str[i]];
-  }
+  }   
 
 return 0;
 }
