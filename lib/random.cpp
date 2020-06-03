@@ -1,5 +1,6 @@
 #include "random.hpp"
-
+#include <random>
+#include <algorithm>
 /*******************************************************************/
 int random(unsigned char* str, size_t n, int verbose){
 
