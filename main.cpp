@@ -264,8 +264,10 @@ int main(int argc, char** argv){
 
     size_t prev=0, max=0, count=0;
 
-    if(print)
+    if(print){
+      printf("## LYNDON FACTORS ##\n");
       str[n-1]=END_MARKER;
+    }
 
     for(auto it = R.begin(); it!=R.end(); it++){
       #if DEBUG
