@@ -29,8 +29,7 @@ int compare_2mer(const void * left, const void * right) {
 
 /*******************************************************************/
 
-
-int compare(const void * left, const void * right) {
+int compare_mfs(const void * left, const void * right) {
     const t_symbol * a = (const t_symbol *) left;
     const t_symbol * b = (const t_symbol *) right;
     if (a->freq > b->freq) {
@@ -38,6 +37,33 @@ int compare(const void * left, const void * right) {
     } else if (a->freq < b->freq) {
         return 1;
     } else {
+      if(a->symbol < b->symbol){
+        return -1;
+      }
+      else if (a->symbol > b->symbol){
+        return 1;
+      }
+      else
+        return 0;
+    }
+}
+
+/*******************************************************************/
+int compare_lfs(const void * left, const void * right) {
+    const t_symbol * a = (const t_symbol *) left;
+    const t_symbol * b = (const t_symbol *) right;
+    if (a->freq > b->freq) {
+        return -1;
+    } else if (a->freq < b->freq) {
+        return 1;
+    } else {
+      if(a->symbol > b->symbol){
+        return -1;
+      }
+      else if (a->symbol < b->symbol){
+        return 1;
+      }
+      else
         return 0;
     }
 }
@@ -84,7 +110,7 @@ return c;
 }
 
 /*******************************************************************/
-int count(unsigned char* str, int n, t_symbol *A, int *C){
+int count(unsigned char* str, int n, t_symbol *A, int *C, int mfs){
 
   int i;
 
@@ -110,7 +136,10 @@ int count(unsigned char* str, int n, t_symbol *A, int *C){
   }
 
   //sort
-  qsort(A, 255, sizeof(t_symbol), compare);
+  if(mfs)
+    qsort(A, 255, sizeof(t_symbol), compare_mfs);
+  else
+    qsort(A, 255, sizeof(t_symbol), compare_lfs);
 
 return c;
 }
@@ -164,12 +193,12 @@ return c;
 }
 
 /*******************************************************************/
-int most_frequent(unsigned char* str, int n){
+int most_frequent(unsigned char* str, int n, int verbose){
 
   t_symbol A[255];
   int C[255];
 
-  int c = count(str, n, A, C);
+  int c = count(str, n, A, C, 1);
 
   int i;
   int B[255];
@@ -179,6 +208,8 @@ int most_frequent(unsigned char* str, int n){
     #if DEBUG
     printf("B['%d'] = '%d'\n", A[i].symbol, B[A[i].symbol]);
     #endif
+    if(verbose) 
+      printf("%c: %c\n", A[i].symbol, B[A[i].symbol]);
   }
 
   for(i=0; i<n-1;i++){
@@ -188,12 +219,12 @@ int most_frequent(unsigned char* str, int n){
 return 0;
 }
 /*******************************************************************/
-int less_frequent(unsigned char* str, int n){
+int less_frequent(unsigned char* str, int n, int verbose){
 
   t_symbol A[255];
   int C[255];
 
-  int c = count(str, n, A, C);
+  int c = count(str, n, A, C, 0);
 
   int i;
   int B[255], b=0;
@@ -201,8 +232,10 @@ int less_frequent(unsigned char* str, int n){
   for(i=c-1; i>=0;i--){
     B[A[i].symbol]=C[b++];
     #if DEBUG
-    printf("B['%d'] = '%d'\n", A[i].symbol, B[A[i].symbol]);
+    printf("B['%c'] = '%c'\n", A[i].symbol, B[A[i].symbol]);
     #endif
+    if(verbose) 
+      printf("%c: %c\n", A[i].symbol, B[A[i].symbol]);
   }
 
   for(i=0; i<n-1;i++){

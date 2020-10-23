@@ -37,10 +37,12 @@ _Notes:_
 
 **Algorithms:**
 
-| -A | Algorithm      |         Output           |
-|:--:|----------------|--------------------------|
-|  0 | None           |    Identity alphabet     |      
-|  7 | Random         |    Randomize permutation |      
+| -A | Algorithm      |         Output            |
+|:--:|----------------|---------------------------|
+|  0 | None           |    Identity alphabet      |      
+|  1 | LFS            |    Least Frenquent Symbol |
+|  2 | MFS            |    Most Frenquent Symbol  |      
+|  7 | Random         |    Randomize permutation  |      
 
 
 **Run a test:**

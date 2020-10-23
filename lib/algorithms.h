@@ -43,8 +43,8 @@ int rle(unsigned char* str, int n, t_rle *A, int *C);
 int count(unsigned char* str, int n, t_symbol *A, int *C);
 int count_2mer(unsigned char* str, int n, t_2mer A[255][255], int *C);
 
-int most_frequent(unsigned char* str, int n);
-int less_frequent(unsigned char* str, int n);
+int most_frequent(unsigned char* str, int n, int verbose);
+int less_frequent(unsigned char* str, int n, int verbose);
 
 int break_2mer(unsigned char* str, int n);
 int extend_2mer(unsigned char* str, int n);

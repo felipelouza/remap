@@ -207,13 +207,13 @@ int main(int argc, char** argv){
     case 0:  printf("## NONE ##\n");//no alphabet reordering
       break;
 
-    case 1:  printf("## FREQ (less) ##\n"); 
-      less_frequent(str, n);
+    case 1:  printf("## LFS ##\n"); 
+      less_frequent(str, n, verbose);
       sprintf(ext, "freq.less");
       break;
 
-    case 2:  printf("## FREQ (most) ##\n"); 
-      most_frequent(str, n);
+    case 2:  printf("## MFS ##\n"); 
+      most_frequent(str, n, verbose);
       sprintf(ext, "freq.most");
       break;
 
